@@ -1,0 +1,30 @@
+name: LINUX TOOLS
+
+on: 
+  workflow_dispatch:
+    inputs:
+      authcode:
+        description: 'Enter Debian ssh from crd website'
+        required: true
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: test
+      run: |
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install xfce4 -y
+        wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb -P /tmp
+        sudo apt install /tmp/chrome-remote-desktop_current_amd64.deb
+        echo 'runner:123456' | sudo chpasswd
+        echo 'root:123456' | sudo chpasswd 
+    - name: crd
+      run: | 
+        ${{ inputs.authcode }} --pin=123456
+        #!/bin/bash
+        # in file ~/bin/keepalive.sh
+        while true ; do
+           echo " " ; sleep 300
+           done
+        # end script
